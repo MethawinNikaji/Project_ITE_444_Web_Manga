@@ -12,7 +12,7 @@ export default function AddChapterPage({ params }) {
   const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
-    // ถ้าเกิดข้อผิดพลาด
+    // ถ้าเกิดข้อผิดพลาด[cite: 1]
     if (state?.error) {
       setIsUploading(false);
       Swal.fire({
@@ -22,12 +22,12 @@ export default function AddChapterPage({ params }) {
         confirmButtonColor: "#dc3545",
       });
     } 
-    // ถ้าบันทึกสำเร็จ (Server Action ส่ง success มา)
+    // ถ้าบันทึกสำเร็จ (Server Action ส่ง success มา)[cite: 1]
     else if (state?.success) {
       Swal.fire({
         icon: "success",
         title: "เพิ่มตอนใหม่เรียบร้อย!",
-        text: "อัปโหลดรูปภาพและบันทึกข้อมูลสำเร็จแล้ว",
+        text: "อัปโหลดไฟล์และบันทึกข้อมูลสำเร็จแล้ว",
         timer: 1500,
         showConfirmButton: false,
       }).then(() => {
@@ -40,7 +40,7 @@ export default function AddChapterPage({ params }) {
     setIsUploading(true);
     Swal.fire({
       title: "กำลังอัปโหลดไฟล์...",
-      text: "โปรดรอสักครู่ ระบบกำลังบันทึกรูปภาพลงเซิร์ฟเวอร์",
+      text: "โปรดรอสักครู่ ระบบกำลังบันทึกไฟล์ลงเซิร์ฟเวอร์",
       allowOutsideClick: false,
       didOpen: () => {
         Swal.showLoading();
@@ -87,18 +87,32 @@ export default function AddChapterPage({ params }) {
           />
         </div>
 
-        <div className="mb-4">
-          <label className="form-label fw-bold">เลือกไฟล์รูปภาพการ์ตูน *</label>
+        {/* ปรับให้ไม่ต้อง required เผื่อผู้ใช้อัปโหลดแค่ PDF อย่างเดียว */}
+        <div className="mb-3">
+          <label className="form-label fw-bold">เลือกไฟล์รูปภาพการ์ตูน</label>
           <input
             type="file"
             name="images"
             className="form-control"
             accept="image/*"
             multiple
-            required
           />
           <small className="form-text text-muted">
             * กด Ctrl หรือ Shift เลือกไฟล์รูปภาพพร้อมกันหลายๆ รูปได้เลย
+          </small>
+        </div>
+
+        {/* เพิ่มช่องสำหรับอัปโหลดไฟล์ PDF */}
+        <div className="mb-4">
+          <label className="form-label fw-bold">หรืออัปโหลดไฟล์ PDF</label>
+          <input
+            type="file"
+            name="pdf_file"
+            className="form-control"
+            accept="application/pdf"
+          />
+          <small className="form-text text-muted">
+            * หากต้องการอัปโหลดเนื้อหาเป็นไฟล์ PDF
           </small>
         </div>
 

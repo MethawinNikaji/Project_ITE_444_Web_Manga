@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import BootstrapClient from "@/components/BootstrapClient";
 
 export const dynamic = "force-dynamic";
@@ -28,7 +28,7 @@ export default async function MangaDetailPage({ params }) {
 
   return (
     <>
-      <Navbar />
+      {/*<Navbar />*/} {/* ใช้ ConditionalNavbar แทน Navbar ใน layout.js */}
       <BootstrapClient />
 
       <div className="container py-4">

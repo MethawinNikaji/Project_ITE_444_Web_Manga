@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { existsSync, mkdirSync } from "fs";
 import fs from "fs/promises";
 import path from "path";
+import { Form } from "react-bootstrap";
 
 // 1. ฟังก์ชันสำหรับสร้าง Chapter ใหม่ (Create)
 export async function createChapterAction(prevState, formData) {
@@ -15,8 +16,14 @@ export async function createChapterAction(prevState, formData) {
   // ดึงไฟล์รูปภาพทั้งหมดที่ถูกเลือกเข้ามา
   const files = formData.getAll("images");
 
-  if (!chapterNumber || !files || files.length === 0 || files[0].size === 0) {
-    return { error: "กรุณากรอกเลขตอน และเลือกไฟล์รูปภาพอย่างน้อย 1 ภาพ" };
+  const images = formData.getAll("images");
+  const pdfFile = formData.get("pdf_file");
+
+  const hasImages = images && images.length > 0 && images[0].size > 0;
+  const hasPdf = pdfFile && pdfFile.size > 0;
+
+  if (!chapterNumber || (!hasImages && !hasPdf)) {
+    return { error: "กรุณากรอกเลขตอน และเลือกไฟล์รูปภาพหรือไฟล์ PDF อย่างน้อย 1 รายการ" };
   }
 
   try {

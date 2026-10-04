@@ -1,0 +1,151 @@
+/* จัดหน้าให้อยู่กึ่งกลางหน้าจอทั้งแนวตั้งและแนวนอน */
+.login-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at top left, #1e293b, #0f172a 60%, #090d16);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  box-sizing: border-box;
+}
+
+/* การ์ดฟอร์มล็อกอิน (Modern Glassmorphism & Shadow) */
+.login-form-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 40px 36px;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+  animation: fadeInUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* หัวข้อ Login */
+.login-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  text-align: center;
+  margin-bottom: 28px;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+.login-title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  border-radius: 999px;
+  margin: 10px auto 0;
+}
+
+/* ป้ายกำกับช่องกรอกข้อมูล (Label) */
+.login-form .form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+/* ช่องกรอกข้อมูล (Input) */
+.login-form .form-control {
+  padding: 12px 16px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  background-color: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-form .form-control::placeholder {
+  color: #94a3b8;
+}
+
+.login-form .form-control:hover {
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.login-form .form-control:focus {
+  background-color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  outline: none;
+}
+
+/* สไตล์เมื่อกรอกข้อมูลไม่ถูกต้อง (Validation Error) */
+.login-form .form-control.is-invalid {
+  border-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.login-form .form-control.is-invalid:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.15);
+}
+
+.login-form .invalid-feedback {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #dc2626;
+  margin-top: 6px;
+}
+
+/* ปุ่ม Login */
+.login-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.45);
+  transition: all 0.25s ease;
+}
+
+.login-button:hover,
+.login-button:focus {
+  background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -4px rgba(37, 99, 235, 0.55);
+}
+
+.login-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.4);
+}
+
+/* แอนิเมชันตอนเปิดหน้า */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* รองรับหน้าจอมือถือ */
+@media (max-width: 480px) {
+  .login-form-container {
+    padding: 32px 24px;
+    border-radius: 16px;
+  }
+
+  .login-title {
+    font-size: 1.5rem;
+  }
+}

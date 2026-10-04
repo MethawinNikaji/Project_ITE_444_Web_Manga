@@ -26,6 +26,9 @@ export default function Navbar() {
         <Link href="/admin/mangas" style={{ color: '#0070f3', textDecoration: 'none', fontWeight: 'bold' }}>
           จัดการมังงะ (Admin)
         </Link>
+        <Link href="/login" style={{ color: '#ccc', textDecoration: 'none' }}>
+          ล็อกอิน
+        </Link>
       </div>
     </nav>
   );

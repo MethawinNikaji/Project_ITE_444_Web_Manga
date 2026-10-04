@@ -8,27 +8,28 @@ datasource db {
 }
 
 model mangas {
-  id          Int        @id @default(autoincrement())
-  title       String
-  author      String?
-  cover_url   String     @db.Text
-  description String?    @db.Text
-  status      String     @default("ongoing")
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @default(now()) @updatedAt   
+  id          Int            @id @default(autoincrement())
+  title       String         @db.VarChar(255)
+  cover_url   String         @db.Text
+  description String?        @db.Text
+  author      String?        @db.VarChar(100)
+  rating      Float?         @default(0) @db.Float
+  status      mangas_status? @default(ongoing)
+  is_featured Boolean?       @default(false)
+  created_at  DateTime       @default(now()) @db.Timestamp(0)
   chapters    chapters[]
 }
 
 model chapters {
-  id             Int              @id @default(autoincrement())
+  id             Int             @id @default(autoincrement())
   manga_id       Int
-  chapter_number Float
-  title          String?
-  created_at     DateTime         @default(now())
-  manga          mangas           @relation(fields: [manga_id], references: [id], onDelete: Cascade)
+  chapter_number Int
+  title          String?         @db.VarChar(255)
+  created_at     DateTime        @default(now()) @db.Timestamp(0)
   pages          chapter_pages[]
+  manga          mangas          @relation(fields: [manga_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "chapters_ibfk_1")
 
-  @@index([manga_id])
+  @@index([manga_id], map: "manga_id")
 }
 
 model chapter_pages {
@@ -36,7 +37,26 @@ model chapter_pages {
   chapter_id  Int
   page_number Int
   image_url   String   @db.Text
-  chapter     chapters @relation(fields: [chapter_id], references: [id], onDelete: Cascade)
+  chapter     chapters @relation(fields: [chapter_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "chapter_pages_ibfk_1")
 
-  @@index([chapter_id])
+  @@index([chapter_id], map: "chapter_id")
+}
+
+model users {
+  id         Int         @id @default(autoincrement())
+  name       String      @db.VarChar(100)
+  email      String      @unique(map: "email") @db.VarChar(100)
+  password   String      @db.VarChar(255)
+  role       users_role? @default(user)
+  created_at DateTime    @default(now()) @db.Timestamp(0)
+}
+
+enum users_role {
+  user
+  admin
+}
+
+enum mangas_status {
+  ongoing
+  completed
 }

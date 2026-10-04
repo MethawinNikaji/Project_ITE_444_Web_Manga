@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import BootstrapClient from "@/components/BootstrapClient";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -37,7 +36,6 @@ export default async function Home({ searchParams }) {
 
   return (
     <>
-      <Navbar />
       <BootstrapClient />
 
       <div className="container mt-4 mb-5">

@@ -18,14 +18,18 @@ export default function SweetAlertDel() {
       cancelButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
-        form.submit();
+        form.requestSubmit();
       }
     });
   };
 
   return (
-    <button type="button" onClick={handleDelete} className="btn btn-danger btn-sm">
-      Delete
+    <button 
+    type="button"
+    className="btn btn-danger"
+    onClick={handleDelete}
+  >
+    ลบ
     </button>
   );
 }
