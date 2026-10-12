@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
@@ -13,10 +14,17 @@ export default async function ReadChapterPage({ params }) {
     notFound();
   }
 
-  // ดึงข้อมูลตอนปัจจุบันพร้อมรูปภาพ
+  // ดึงข้อมูลตอนปัจจุบันพร้อมรูปภาพ และเช็คข้อมูลมังงะ
   const chapter = await prisma.chapters.findUnique({
     where: { id: chapterId },
     include: {
+      manga: {
+        select: {
+          id: true,
+          title: true,
+          is_nsfw: true,
+        },
+      },
       pages: {
         orderBy: { page_number: "asc" },
       },
@@ -24,6 +32,14 @@ export default async function ReadChapterPage({ params }) {
   });
 
   if (!chapter) notFound();
+
+  // หากเป็นมังงะ NSFW ผู้ใช้ต้องเข้าสู่ระบบก่อน
+  if (chapter.manga?.is_nsfw) {
+    const user = await getCurrentUser();
+    if (!user) {
+      redirect(`/login?reason=nsfw&callbackUrl=/manga/${mangaId}/chapter/${chapterId}`);
+    }
+  }
 
   // ดึงรายการตอนทั้งหมดของมังงะเรื่องนี้ เรียงตามเลขตอน
   const allChapters = await prisma.chapters.findMany({

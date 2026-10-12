@@ -13,6 +13,7 @@ export async function updateManga(prevState, formData) {
   const author = formData.get("author")?.trim() || "";
   const description = formData.get("description")?.trim() || "";
   const status = formData.get("status") || "ongoing";
+  const is_nsfw = formData.get("is_nsfw") === "on" || formData.get("is_nsfw") === "true";
   const coverFile = formData.get("cover_image");
   const existingCoverUrl = formData.get("existing_cover_url")?.trim() || "";
 
@@ -83,6 +84,7 @@ export async function updateManga(prevState, formData) {
         cover_url: finalCoverUrl,
         description,
         status,
+        is_nsfw,
       },
     });
   } catch (error) {

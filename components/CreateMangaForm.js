@@ -2,13 +2,19 @@
 
 import { useFormState } from "react-dom";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createManga } from "@/app/admin/mangas/create/actions";
 
 export default function CreateMangaForm() {
   const [state, formAction] = useFormState(createManga, null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [previewUrl, setPreviewUrl] = useState(null);
+
+  useEffect(() => {
+    if (state?.errors) {
+      setIsSubmitting(false);
+    }
+  }, [state]);
 
   const values = state?.values || {};
 
@@ -94,6 +100,24 @@ export default function CreateMangaForm() {
           <option value="ongoing">ยังไม่จบ (Ongoing)</option>
           <option value="completed">จบแล้ว (Completed)</option>
         </select>
+      </div>
+
+      <div className="mb-3 form-check form-switch bg-light p-3 rounded border">
+        <div className="ms-2">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            name="is_nsfw"
+            id="isNsfwCreate"
+            defaultChecked={Boolean(values.is_nsfw)}
+          />
+          <label className="form-check-label fw-bold text-danger ms-2" htmlFor="isNsfwCreate">
+            มังงะหมวดหมู่ NSFW (สำหรับสมาชิก Member เท่านั้น)
+          </label>
+          <div className="form-text small text-muted">
+            หากเปิดใช้งาน มังงะเรื่องนี้จะแสดงเฉพาะในโซน NSFW และต้องเข้าสู่ระบบเป็น Member ก่อนเข้าชม
+          </div>
+        </div>
       </div>
 
       <div className="mb-3">

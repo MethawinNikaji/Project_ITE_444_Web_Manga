@@ -45,7 +45,12 @@ export default async function MangaDetailPage({ params }) {
             </div>
             <div className="col-md-9 p-4 d-flex flex-column justify-content-between">
               <div>
-                <h2 className="fw-bold">{manga.title}</h2>
+                <div className="d-flex align-items-center gap-2 mb-1">
+                  <h2 className="fw-bold mb-0">{manga.title}</h2>
+                  {manga.is_nsfw && (
+                    <span className="badge bg-danger fs-6">NSFW</span>
+                  )}
+                </div>
                 <p className="text-muted">ผู้แต่ง: {manga.author || "ไม่ระบุ"}</p>
                 <p className="mb-3">
                   สถานะ:{" "}

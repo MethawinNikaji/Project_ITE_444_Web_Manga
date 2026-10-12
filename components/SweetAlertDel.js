@@ -18,7 +18,11 @@ export default function SweetAlertDel() {
       cancelButtonText: "ยกเลิก",
     }).then((result) => {
       if (result.isConfirmed) {
-        form.submit();
+        if (form.requestSubmit) {
+          form.requestSubmit();
+        } else {
+          form.submit();
+        }
       }
     });
   };

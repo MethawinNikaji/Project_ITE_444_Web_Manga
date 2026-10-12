@@ -142,6 +142,11 @@ export default async function Home({ searchParams }) {
                       alt={manga.title}
                       style={{ height: "300px", objectFit: "cover" }}
                     />
+                    {manga.is_nsfw && (
+                      <span className="badge bg-danger position-absolute top-0 start-0 m-2">
+                        NSFW
+                      </span>
+                    )}
                     <span
                       className={`badge position-absolute top-0 end-0 m-2 ${
                         manga.status === "completed"
